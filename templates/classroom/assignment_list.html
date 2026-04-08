@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assignments</title>
+</head>
+<body>
+
+<h2>Assignments</h2>
+
+<a href="/dashboard/">⬅ Back to Dashboard</a>
+<hr>
+
+{% if assignments %}
+
+    {% for assignment in assignments %}
+        <div style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc;">
+
+            <h3>{{ assignment.title }}</h3>
+
+            <p><strong>Description:</strong> {{ assignment.description }}</p>
+
+            <p><strong>Deadline:</strong> {{ assignment.deadline }}</p>
+
+            {% if assignment.file %}
+                <p>
+                    <a href="{{ assignment.file.url }}" target="_blank">
+                        📥 Download Assignment File
+                    </a>
+                </p>
+            {% endif %}
+
+            <!-- ✅ Submission Status -->
+            {% if assignment.is_submitted %}
+                <p style="color: green;"><strong>Submitted ✅</strong></p>
+            {% else %}
+                <a href="/submit/{{ assignment.id }}/">
+                    <button>Submit Assignment</button>
+                </a>
+            {% endif %}
+
+        </div>
+    {% endfor %}
+
+{% else %}
+    <p>No assignments available.</p>
+{% endif %}
+
+</body>
+</html>

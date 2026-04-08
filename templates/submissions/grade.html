@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grade Submission</title>
+</head>
+<body>
+
+<h2>Grade Submission</h2>
+
+<p><strong>Student:</strong> {{ submission.student.username }}</p>
+<p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Grade</button>
+</form>
+
+</body>
+</html>

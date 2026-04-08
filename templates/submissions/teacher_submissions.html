@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Submissions</title>
+</head>
+<body>
+
+<h2>All Student Submissions</h2>
+
+<a href="/dashboard/">⬅ Back to Dashboard</a>
+<hr>
+
+{% for submission in submissions %}
+    <div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+
+        <p><strong>Student:</strong> {{ submission.student.username }}</p>
+
+        <p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
+
+        <p><strong>Submitted At:</strong> {{ submission.submitted_at }}</p>
+
+        <p>
+            <a href="{{ submission.file.url }}" target="_blank">
+                📥 Download Submission
+            </a>
+        </p>
+
+        <p><strong>Grade:</strong>
+            {% if submission.grade %}
+                {{ submission.grade }}
+            {% else %}
+                Not graded
+            {% endif %}
+        </p>
+
+        <p><strong>Feedback:</strong> {{ submission.feedback }}</p>
+
+        <a href="/teacher/grade/{{ submission.id }}/">
+            <button>Grade</button>
+        </a>
+
+    </div>
+{% endfor %}
+
+</body>
+</html>
