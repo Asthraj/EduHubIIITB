@@ -2,17 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Submit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Assignment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
-<body>
-<h2>Submit Assignment</h2>
+<body class="min-h-screen py-12">
 
-<h3>{{ assignment.title }}</h3>
+<div class="max-w-2xl mx-auto px-6">
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Upload</button>
-</form>
+    <!-- Back Button -->
+    <a href="/dashboard/" 
+       class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-8 transition-colors">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Assignments
+    </a>
+
+    <!-- Main Card -->
+    <div class="card bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-8 text-white">
+            <h1 class="text-3xl font-bold flex items-center gap-3">
+                <i class="fa-solid fa-upload"></i>
+                Submit Assignment
+            </h1>
+            <h2 class="text-xl mt-3 opacity-90">{{ assignment.title }}</h2>
+        </div>
+
+        <!-- Form Content -->
+        <div class="p-8">
+
+            <form method="POST" enctype="multipart/form-data" class="space-y-8">
+
+                {% csrf_token %}
+
+                <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                    {{ form.as_p }}
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                        class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 
+                               text-white font-semibold text-lg py-5 rounded-2xl shadow-lg 
+                               transition-all duration-300 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-cloud-upload-alt"></i>
+                    Upload & Submit Assignment
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Optional Help Text -->
+    <p class="text-center text-gray-500 text-sm mt-8">
+        Make sure your file is correct before submitting. You can only submit once.
+    </p>
+
+</div>
+
 </body>
 </html>
