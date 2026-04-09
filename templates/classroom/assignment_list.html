@@ -1,49 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Assignments</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Assignments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+    </style>
 </head>
-<body>
+<body class="min-h-screen py-10">
 
-<h2>Assignments</h2>
+<div class="max-w-5xl mx-auto px-6">
 
-<a href="/dashboard/">⬅ Back to Dashboard</a>
-<hr>
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-10">
+        <div>
+            <h1 class="text-4xl font-bold text-gray-800 flex items-center gap-3">
+                <i class="fa-solid fa-tasks text-blue-600"></i>
+                Assignments
+            </h1>
+            <p class="text-gray-600 mt-2">Stay on top of your coursework</p>
+        </div>
+        <a href="/dashboard/" 
+           class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+    </div>
 
-{% if assignments %}
+    <hr class="border-gray-200 mb-8">
 
-    {% for assignment in assignments %}
-        <div style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc;">
+    {% if assignments %}
 
-            <h3>{{ assignment.title }}</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            <p><strong>Description:</strong> {{ assignment.description }}</p>
+            {% for assignment in assignments %}
+            <div class="card bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
 
-            <p><strong>Deadline:</strong> {{ assignment.deadline }}</p>
+                <!-- Card Header -->
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-5 text-white">
+                    <h3 class="text-xl font-semibold">{{ assignment.title }}</h3>
+                </div>
 
-            {% if assignment.file %}
-                <p>
-                    <a href="{{ assignment.file.url }}" target="_blank">
-                        📥 Download Assignment File
+                <!-- Card Body -->
+                <div class="p-6">
+
+                    <p class="text-gray-700 leading-relaxed mb-5 line-clamp-3">
+                        {{ assignment.description }}
+                    </p>
+
+                    <div class="flex items-center gap-3 text-sm mb-6">
+                        <div class="flex items-center gap-2 text-gray-600">
+                            <i class="fa-solid fa-clock"></i>
+                            <span><strong>Deadline:</strong> {{ assignment.deadline }}</span>
+                        </div>
+                    </div>
+
+                    {% if assignment.file %}
+                    <a href="{{ assignment.file.url }}" target="_blank"
+                       class="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 font-medium py-3 px-4 rounded-xl mb-6">
+                        <i class="fa-solid fa-download"></i>
+                        Download Assignment File
                     </a>
-                </p>
-            {% endif %}
+                    {% endif %}
 
-            <!-- ✅ Submission Status -->
-            {% if assignment.is_submitted %}
-                <p style="color: green;"><strong>Submitted ✅</strong></p>
-            {% else %}
-                <a href="/submit/{{ assignment.id }}/">
-                    <button>Submit Assignment</button>
-                </a>
-            {% endif %}
+                    <!-- Submission Status -->
+                    {% if assignment.is_submitted %}
+                        <div class="flex items-center justify-center gap-3 bg-green-100 text-green-700 py-4 rounded-2xl font-semibold">
+                            <i class="fa-solid fa-circle-check text-xl"></i>
+                            Submitted Successfully ✅
+                        </div>
+                    {% else %}
+                        <a href="/submit/{{ assignment.id }}/" 
+                           class="block text-center bg-blue-600 hover:bg-blue-700 transition-all text-white font-semibold py-4 rounded-2xl text-lg shadow-md">
+                            Submit Assignment Now
+                        </a>
+                    {% endif %}
+
+                </div>
+            </div>
+            {% endfor %}
 
         </div>
-    {% endfor %}
 
-{% else %}
-    <p>No assignments available.</p>
-{% endif %}
+    {% else %}
+        <div class="text-center py-20">
+            <i class="fa-solid fa-folder-open text-7xl text-gray-300 mb-6"></i>
+            <p class="text-2xl text-gray-500 font-medium">No assignments available right now.</p>
+            <p class="text-gray-400 mt-2">Check back later!</p>
+        </div>
+    {% endif %}
+
+</div>
 
 </body>
 </html>
