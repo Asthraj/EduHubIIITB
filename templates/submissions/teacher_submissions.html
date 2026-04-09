@@ -1,46 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Submissions</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+                        0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+    </style>
 </head>
-<body>
 
-<h2>All Student Submissions</h2>
+<body class="min-h-screen py-10">
 
-<a href="/dashboard/">⬅ Back to Dashboard</a>
-<hr>
+<div class="max-w-6xl mx-auto px-6">
 
-{% for submission in submissions %}
-    <div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-10">
+        <div>
+            <h1 class="text-4xl font-bold text-gray-800 flex items-center gap-3">
+                <i class="fa-solid fa-file-lines text-blue-600"></i>
+                Student Submissions
+            </h1>
+            <p class="text-gray-600 mt-2">Review and grade student work</p>
+        </div>
 
-        <p><strong>Student:</strong> {{ submission.student.username }}</p>
-
-        <p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
-
-        <p><strong>Submitted At:</strong> {{ submission.submitted_at }}</p>
-
-        <p>
-            <a href="{{ submission.file.url }}" target="_blank">
-                📥 Download Submission
-            </a>
-        </p>
-
-        <p><strong>Grade:</strong>
-            {% if submission.grade %}
-                {{ submission.grade }}
-            {% else %}
-                Not graded
-            {% endif %}
-        </p>
-
-        <p><strong>Feedback:</strong> {{ submission.feedback }}</p>
-
-        <a href="/teacher/grade/{{ submission.id }}/">
-            <button>Grade</button>
+        <a href="/dashboard/" 
+           class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Dashboard
         </a>
+    </div>
+
+    <hr class="border-gray-200 mb-8">
+
+    {% if submissions %}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        {% for submission in submissions %}
+        <div class="card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+
+            <!-- Card Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-5 text-white">
+                <h3 class="text-lg font-semibold">
+                    {{ submission.assignment.title }}
+                </h3>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-6 space-y-4">
+
+                <p class="flex items-center gap-2 text-gray-700">
+                    <i class="fa-solid fa-user text-gray-500"></i>
+                    <strong>Student:</strong> {{ submission.student.username }}
+                </p>
+
+                <p class="flex items-center gap-2 text-gray-600 text-sm">
+                    <i class="fa-solid fa-clock"></i>
+                    <strong>Submitted:</strong> {{ submission.submitted_at }}
+                </p>
+
+                <!-- Download -->
+                <a href="{{ submission.file.url }}" target="_blank"
+                   class="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 transition-colors text-gray-700 font-medium py-3 px-4 rounded-xl">
+                    <i class="fa-solid fa-download"></i>
+                    Download Submission
+                </a>
+
+                <!-- Grade -->
+                <div class="text-sm">
+                    <p class="flex items-center gap-2">
+                        <i class="fa-solid fa-star text-yellow-500"></i>
+                        <strong>Grade:</strong>
+                        {% if submission.grade %}
+                            <span class="text-green-600 font-semibold">{{ submission.grade }}</span>
+                        {% else %}
+                            <span class="text-red-500">Not graded</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <!-- Feedback -->
+                {% if submission.feedback %}
+                <div class="bg-gray-50 p-3 rounded-lg text-sm text-gray-700">
+                    <strong>Feedback:</strong>
+                    <p class="mt-1">{{ submission.feedback }}</p>
+                </div>
+                {% endif %}
+
+                <!-- Grade Button -->
+                <a href="/teacher/grade/{{ submission.id }}/"
+                   class="block text-center bg-blue-600 hover:bg-blue-700 transition-all text-white font-semibold py-3 rounded-xl shadow-md">
+                    Grade Submission
+                </a>
+
+            </div>
+        </div>
+        {% endfor %}
 
     </div>
-{% endfor %}
+
+    {% else %}
+    <!-- Empty State -->
+    <div class="text-center py-20">
+        <i class="fa-solid fa-folder-open text-7xl text-gray-300 mb-6"></i>
+        <p class="text-2xl text-gray-500 font-medium">No submissions yet.</p>
+        <p class="text-gray-400 mt-2">Students haven't submitted assignments.</p>
+    </div>
+    {% endif %}
+
+</div>
 
 </body>
 </html>
