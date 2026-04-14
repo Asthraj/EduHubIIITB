@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'accounts',
     'classroom',
     'submissions',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +124,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+import cloudinary
+
+cloudinary.config(
+    cloud_name='diwkj5d2h',
+    api_key='188665943915661',
+    api_secret='1h61Rc0A8IIO_bTOK-evctUkOTw'
+)
