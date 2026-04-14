@@ -124,7 +124,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-<<<<<<< HEAD
+
 import cloudinary
 
 cloudinary.config(
@@ -133,5 +133,4 @@ cloudinary.config(
     api_secret='1h61Rc0A8IIO_bTOK-evctUkOTw'
 )
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-=======
->>>>>>>
+
