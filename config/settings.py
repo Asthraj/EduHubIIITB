@@ -124,6 +124,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+<<<<<<< HEAD
 import cloudinary
 
 cloudinary.config(
@@ -131,3 +132,5 @@ cloudinary.config(
     api_key='188665943915661',
     api_secret='1h61Rc0A8IIO_bTOK-evctUkOTw'
 )
+=======
+>>>>>>> 53e6f4b4f3dac1f27fd35c81607ee763092d96fe

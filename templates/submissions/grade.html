@@ -1,20 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grade Submission</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+                        0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+    </style>
 </head>
-<body>
 
-<h2>Grade Submission</h2>
+<body class="min-h-screen py-10">
 
-<p><strong>Student:</strong> {{ submission.student.username }}</p>
-<p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
+<div class="max-w-3xl mx-auto px-6">
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Grade</button>
-</form>
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-10">
+        <div>
+            <h1 class="text-4xl font-bold text-gray-800 flex items-center gap-3">
+                <i class="fa-solid fa-pen-to-square text-blue-600"></i>
+                Grade Submission
+            </h1>
+            <p class="text-gray-600 mt-2">Evaluate and assign marks</p>
+        </div>
+
+        <a href="/dashboard/" 
+           class="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+    </div>
+
+    <hr class="border-gray-200 mb-8">
+
+    <!-- Card -->
+    <div class="card bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+
+        <!-- Card Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-5 text-white">
+            <h3 class="text-xl font-semibold">Submission Details</h3>
+        </div>
+
+        <!-- Card Body -->
+        <div class="p-6 space-y-6">
+
+            <div class="space-y-2 text-gray-700">
+                <p class="flex items-center gap-2">
+                    <i class="fa-solid fa-user text-gray-500"></i>
+                    <strong>Student:</strong> {{ submission.student.username }}
+                </p>
+
+                <p class="flex items-center gap-2">
+                    <i class="fa-solid fa-book text-gray-500"></i>
+                    <strong>Assignment:</strong> {{ submission.assignment.title }}
+                </p>
+            </div>
+
+            <!-- Form -->
+            <form method="POST" class="space-y-5">
+                {% csrf_token %}
+
+                <div class="space-y-4">
+                    {{ form.as_p }}
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 transition-all text-white font-semibold py-3 rounded-xl shadow-md flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Save Grade
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>
